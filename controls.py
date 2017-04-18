@@ -85,7 +85,7 @@ class Controls(object):
 
     def forward(self):
 
-        for i in range(100):
+        for i in range(50):
             GPIO.output(self.leftStepper['step'], GPIO.HIGH)
             time.sleep(0.0001)
             GPIO.output(self.leftStepper['step'], GPIO.LOW)
@@ -138,10 +138,11 @@ if __name__ == '__main__':
     controls.motorSetup()
 
     for step in range(0, 100):
-        time.sleep(0.4)
+        time.sleep(0.10)
         controls.motorForward()
 
     GPIO.output(controls.rightStepper['enable'], GPIO.HIGH)
     GPIO.output(controls.leftStepper['enable'], GPIO.HIGH)
+    controls.motorStopped = True
     controls.close()
 
