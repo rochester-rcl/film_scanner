@@ -85,7 +85,7 @@ class Controls(object):
 
     def forward(self):
 
-        for i in range(20):
+        for i in range(10):
             GPIO.output(self.leftStepper['step'], GPIO.HIGH)
             time.sleep(0.0001)
             GPIO.output(self.leftStepper['step'], GPIO.LOW)
