@@ -45,7 +45,7 @@ class Controls(object):
 
     def setMicrostepResolution(self, pins, pinModes):
         setMicrostep = lambda pin, pinMode: GPIO.output(pin, pinMode)
-        for pin, mode in izip(pins, pinModes):
+        for pin, mode in zip(pins, pinModes):
             print(pin, mode)
             setMicrostep(pin[1], mode)
 
