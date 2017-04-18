@@ -136,10 +136,10 @@ if __name__ == '__main__':
     controls = Controls()
     controls.microstep('sixteenth')
     controls.motorSetup()
-
     while True:
-        time.sleep(0.001)
-        controls.motorForward()
+        for step in range(0, 1000):
+            time.sleep(0.001)
+            controls.motorForward()
 
     GPIO.output(controls.rightStepper['enable'], GPIO.HIGH)
     GPIO.output(controls.leftStepper['enable'], GPIO.HIGH)
