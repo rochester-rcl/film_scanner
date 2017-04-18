@@ -103,9 +103,9 @@ class Controls(object):
 
     def feed(self):
         GPIO.output(self.rightStepper['step'], GPIO.HIGH)
-        time.sleep(0.05)
+        time.sleep(0.5)
         GPIO.output(self.rightStepper['step'], GPIO.LOW)
-        time.sleep(0.05)
+        time.sleep(0.5)
 
 
     def pause(self):
