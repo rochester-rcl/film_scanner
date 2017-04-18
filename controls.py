@@ -138,7 +138,7 @@ if __name__ == '__main__':
     controls.motorSetup()
 
     for step in range(0, 100):
-        time.sleep(0.10)
+        time.sleep(0.05)
         controls.motorForward()
 
     GPIO.output(controls.rightStepper['enable'], GPIO.HIGH)
