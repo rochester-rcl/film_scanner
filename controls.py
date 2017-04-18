@@ -87,13 +87,13 @@ class Controls(object):
 
 
         GPIO.output(self.leftStepper['step'], GPIO.HIGH)
-        time.sleep(0.0001)
+        #time.sleep(0.0001)
         GPIO.output(self.leftStepper['step'], GPIO.LOW)
-        time.sleep(0.0001)
+        #time.sleep(0.0001)
         GPIO.output(self.rightStepper['step'], GPIO.HIGH)
-        time.sleep(0.0001)
+        #time.sleep(0.0001)
         GPIO.output(self.rightStepper['step'], GPIO.LOW)
-        time.sleep(0.0001)
+        #time.sleep(0.0001)
 
         if self.motorStopped:
             self.motorShutdown()
