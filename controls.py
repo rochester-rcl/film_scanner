@@ -131,3 +131,17 @@ class Controls(object):
     def close(self):
         self.motorShutdown()
         GPIO.cleanup()
+
+if '__name__' == '__main__':
+    controls = Controls()
+    controls.microstep('sixteenth')
+    controls.motorSetup()
+
+    for step in range(0, 100):
+        time.sleep(15)
+        controls.motorForward()
+
+    GPIO.output(controls.rightStepper['enable'], GPIO.HIGH)
+    GPIO.output(controls.leftStepper['enable'], GPIO.HIGH)
+    controls.close()
+
