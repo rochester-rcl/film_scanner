@@ -137,7 +137,7 @@ if __name__ == '__main__':
     controls.microstep('sixteenth')
     controls.motorSetup()
 
-    for step in range(0, 20):
+    for step in range(0, 50):
         time.sleep(0.005)
         controls.motorForward()
 
