@@ -132,7 +132,7 @@ class Controls(object):
         self.motorShutdown()
         GPIO.cleanup()
 
-if '__name__' == '__main__':
+if __name__ == '__main__':
     controls = Controls()
     controls.microstep('sixteenth')
     controls.motorSetup()
