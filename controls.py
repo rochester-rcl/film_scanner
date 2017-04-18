@@ -102,11 +102,10 @@ class Controls(object):
         Thread(target=self.feed, args=()).start()
 
     def feed(self):
-        print('hi')
         GPIO.output(self.rightStepper['step'], GPIO.HIGH)
-        time.sleep(0.5)
+        time.sleep(1)
         GPIO.output(self.rightStepper['step'], GPIO.LOW)
-        time.sleep(0.5)
+        time.sleep(1)
 
 
     def pause(self):
