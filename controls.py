@@ -144,7 +144,7 @@ if __name__ == '__main__':
     controls.microstep('sixteenth')
     controls.motorSetup()
     while True:
-        for step in range(0, 1000):
+        for step in range(0, 500):
             time.sleep(0.004)
             controls.motorForward()
             #controls.feed_film()
