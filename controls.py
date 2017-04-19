@@ -87,9 +87,9 @@ class Controls(object):
     def forward(self):
 
 
-        GPIO.output(self.leftStepper['step'], GPIO.HIGH)
+        GPIO.output(self.righStepper['step'], GPIO.HIGH)
         #time.sleep(0.0001)
-        GPIO.output(self.leftStepper['step'], GPIO.LOW)
+        GPIO.output(self.rightStepper['step'], GPIO.LOW)
         #time.sleep(0.0001)
 
         if self.motorStopped:
@@ -102,9 +102,9 @@ class Controls(object):
         Thread(target=self.feed, args=()).start()
 
     def feed(self):
-        GPIO.output(self.rightStepper['step'], GPIO.HIGH)
+        GPIO.output(self.leftStepper['step'], GPIO.HIGH)
         time.sleep(0.0001)
-        GPIO.output(self.rightStepper['step'], GPIO.LOW)
+        GPIO.output(self.leftStepper['step'], GPIO.LOW)
         time.sleep(0.0001)
 
 
@@ -147,7 +147,7 @@ if __name__ == '__main__':
         for step in range(0, 1000):
             time.sleep(0.004)
             controls.motorForward()
-            # controls.feed_film()
+            #controls.feed_film()
 
     GPIO.output(controls.rightStepper['enable'], GPIO.HIGH)
     GPIO.output(controls.leftStepper['enable'], GPIO.HIGH)
