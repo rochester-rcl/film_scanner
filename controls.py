@@ -87,7 +87,7 @@ class Controls(object):
     def forward(self):
 
 
-        GPIO.output(self.righStepper['step'], GPIO.HIGH)
+        GPIO.output(self.rightStepper['step'], GPIO.HIGH)
         #time.sleep(0.0001)
         GPIO.output(self.rightStepper['step'], GPIO.LOW)
         #time.sleep(0.0001)
