@@ -143,14 +143,16 @@ if __name__ == '__main__':
     controls = Controls()
     controls.microstep('sixteenth')
     controls.motorSetup()
+    controls.backlightOn()
     while True:
-        for step in range(0, 500):
+        for step in range(0, 1500):
             time.sleep(0.004)
             controls.motorForward()
             #controls.feed_film()
 
     GPIO.output(controls.rightStepper['enable'], GPIO.HIGH)
     GPIO.output(controls.leftStepper['enable'], GPIO.HIGH)
+    controls.backlightOff()
     controls.motorStopped = True
     controls.close()
 
