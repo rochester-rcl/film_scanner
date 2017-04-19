@@ -103,9 +103,9 @@ class Controls(object):
 
     def feed(self):
         GPIO.output(self.rightStepper['step'], GPIO.HIGH)
-        time.sleep(0.5)
+        time.sleep(0.0001)
         GPIO.output(self.rightStepper['step'], GPIO.LOW)
-        time.sleep(0.5)
+        time.sleep(0.0001)
 
 
     def pause(self):
@@ -147,7 +147,7 @@ if __name__ == '__main__':
         for step in range(0, 1000):
             time.sleep(0.004)
             controls.motorForward()
-            controls.feed_film()
+            # controls.feed_film()
 
     GPIO.output(controls.rightStepper['enable'], GPIO.HIGH)
     GPIO.output(controls.leftStepper['enable'], GPIO.HIGH)
