@@ -6,7 +6,7 @@ import cv2
 
 
 class FrameCapture(object):
-    VALID_FORMATS = set('tif', 'jpg', 'jpeg', 'png')  # will add DPX and Cineon via OpenImageIO
+    VALID_FORMATS = set(['tif', 'jpg', 'jpeg', 'png'])  # will add DPX and Cineon via OpenImageIO
 
     def __init__(self, output_dir, format, **kwargs):
         try:
