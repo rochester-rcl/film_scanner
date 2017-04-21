@@ -5,7 +5,6 @@ from threading import Thread
 
 class VideoStream(object):
     def __init__(self):
-        super(VideoStream, self).__init__()
         self.camera = PiCamera()
         self.camera.resolution = (1920, 1080)
         self.preview_window = (0, 0, 640, 480)
