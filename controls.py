@@ -7,32 +7,32 @@ import time
 class Controls(object):
     def __init__(self):
         super(Controls, self).__init__()
-        self.backlightPin = 18
-        self.rightStepper = {'dir': 23, 'step': 24, 'enable': 12, \
-                             'vdd': 14, 'microstep': {'ms1': 22, 'ms2': 5, 'ms3': 6}}
-        self.leftStepper = {'dir': 20, 'step': 21, 'enable': 16, \
-                            'vdd': 16, 'microstep': {'ms1': 13, 'ms2': 19, 'ms3': 26}}
+        self.backlight_pin = 18
+        self.right_stepper = {'dir': 23, 'step': 24, 'enable': 12, \
+                              'vdd': 14, 'microstep': {'ms1': 22, 'ms2': 5, 'ms3': 6}}
+        self.left_stepper = {'dir': 20, 'step': 21, 'enable': 16, \
+                             'vdd': 16, 'microstep': {'ms1': 13, 'ms2': 19, 'ms3': 26}}
         self.mode = GPIO.setmode(GPIO.BCM)
-        self.motorStopped = False
+        self.motor_stopped = False
         self.paused = False
 
         # dir pin high is ccw
 
         # set up backlight first
-        GPIO.setup(self.backlightPin, GPIO.OUT)
+        GPIO.setup(self.backlight_pin, GPIO.OUT)
 
-        for key, pin in self.rightStepper.items():
+        for key, pin in self.right_stepper.items():
             if key is 'microstep':
-                for microstepPin, value in pin.items():
+                for microstep_pin, value in pin.items():
                     GPIO.setup(value, GPIO.OUT)
                     GPIO.output(value, GPIO.LOW)
             else:
                 GPIO.setup(pin, GPIO.OUT)
                 GPIO.output(pin, GPIO.LOW)
 
-        for key, pin in self.leftStepper.items():
+        for key, pin in self.left_stepper.items():
             if key is 'microstep':
-                for microstepPin, value in pin.items():
+                for microstep_pin, value in pin.items():
                     GPIO.setup(value, GPIO.OUT)
                     GPIO.output(value, GPIO.LOW)
             else:
@@ -40,60 +40,55 @@ class Controls(object):
                 GPIO.output(pin, GPIO.LOW)
 
         # stop motors w/ enable pins
-        GPIO.output(self.rightStepper['enable'], GPIO.HIGH)
-        GPIO.output(self.leftStepper['enable'], GPIO.HIGH)
+        GPIO.output(self.right_stepper['enable'], GPIO.HIGH)
+        GPIO.output(self.left_stepper['enable'], GPIO.HIGH)
 
-    def setMicrostepResolution(self, pins, pinModes):
-        setMicrostep = lambda pin, pinMode: GPIO.output(pin, pinMode)
-        for pin, mode in zip(pins, pinModes):
+    def set_microstep_resolution(self, pins, pin_modes):
+        set_microstep = lambda pin, pin_mode: GPIO.output(pin, pin_mode)
+        for pin, mode in zip(pins, pin_modes):
             print(pin, mode)
-            setMicrostep(pin[1], mode)
+            set_microstep(pin[1], mode)
 
     def microstep(self, resolution):
         # available resolutions - FULL, HALF, QUARTER, EIGHTH, SIXTEENTH
 
         if resolution is 'full':  # LOW LOW LOW
-            pinMode = [GPIO.LOW, GPIO.LOW, GPIO.LOW]
-            self.setMicrostepResolution(self.rightStepper['microstep'].items(), pinMode)
-            self.setMicrostepResolution(self.leftStepper['microstep'].items(), pinMode)
+            pin_mode = [GPIO.LOW, GPIO.LOW, GPIO.LOW]
+            self.set_microstep_resolution(self.right_stepper['microstep'].items(), pin_mode)
+            self.set_microstep_resolution(self.left_stepper['microstep'].items(), pin_mode)
         if resolution is 'half':  # HIGH LOW LOW
-            pinMode = (GPIO.HIGH, GPIO.LOW, GPIO.LOW)
-            self.setMicrostepResolution(self.rightStepper['microstep'].items(), pinMode)
-            self.setMicrostepResolution(self.leftStepper['microstep'].items(), pinMode)
+            pin_mode = (GPIO.HIGH, GPIO.LOW, GPIO.LOW)
+            self.set_microstep_resolution(self.right_stepper['microstep'].items(), pin_mode)
+            self.set_microstep_resolution(self.left_stepper['microstep'].items(), pin_mode)
         if resolution is 'quarter':  # LOW HIGH LOW
-            pinMode = (GPIO.LOW, GPIO.HIGH, GPIO.LOW)
-            self.setMicrostepResolution(self.rightStepper['microstep'].items(), pinMode)
-            self.setMicrostepResolution(self.leftStepper['microstep'].items(), pinMode)
+            pin_mode = (GPIO.LOW, GPIO.HIGH, GPIO.LOW)
+            self.set_microstep_resolution(self.right_stepper['microstep'].items(), pin_mode)
+            self.set_microstep_resolution(self.left_stepper['microstep'].items(), pin_mode)
         if resolution is 'eighth':  # HIGH HIGH LOW
-            pinMode = (GPIO.HIGH, GPIO.HIGH, GPIO.LOW)
-            self.setMicrostepResolution(self.rightStepper['microstep'].items(), pinMode)
-            self.setMicrostepResolution(self.leftStepper['microstep'].items(), pinMode)
+            pin_mode = (GPIO.HIGH, GPIO.HIGH, GPIO.LOW)
+            self.set_microstep_resolution(self.right_stepper['microstep'].items(), pin_mode)
+            self.set_microstep_resolution(self.left_stepper['microstep'].items(), pin_mode)
         if resolution is 'sixteenth':
-            pinMode = (GPIO.HIGH, GPIO.HIGH, GPIO.HIGH)
-            self.setMicrostepResolution(self.rightStepper['microstep'].items(), pinMode)
-            self.setMicrostepResolution(self.leftStepper['microstep'].items(), pinMode)
+            pin_mode = (GPIO.HIGH, GPIO.HIGH, GPIO.HIGH)
+            self.set_microstep_resolution(self.right_stepper['microstep'].items(), pin_mode)
+            self.set_microstep_resolution(self.left_stepper['microstep'].items(), pin_mode)
 
-    def motorSetup(self):
+    def motor_setup(self):
         # move right stepper counter clockwise
-        GPIO.output(self.leftStepper['dir'], GPIO.LOW)
-        GPIO.output(self.leftStepper['enable'], GPIO.LOW)
-        GPIO.output(self.rightStepper['dir'], GPIO.LOW)
-        GPIO.output(self.rightStepper['enable'], GPIO.LOW)
+        GPIO.output(self.left_stepper['dir'], GPIO.LOW)
+        GPIO.output(self.left_stepper['enable'], GPIO.LOW)
+        GPIO.output(self.right_stepper['dir'], GPIO.LOW)
+        GPIO.output(self.right_stepper['enable'], GPIO.LOW)
 
-    def motorForward(self):
+    def motor_forward(self):
         Thread(target=self.forward, args=()).start()
 
-
     def forward(self):
+        GPIO.output(self.right_stepper['step'], GPIO.HIGH)
+        GPIO.output(self.right_stepper['step'], GPIO.LOW)
 
-
-        GPIO.output(self.rightStepper['step'], GPIO.HIGH)
-        #time.sleep(0.0001)
-        GPIO.output(self.rightStepper['step'], GPIO.LOW)
-        #time.sleep(0.0001)
-
-        if self.motorStopped:
-            self.motorShutdown()
+        if self.motor_stopped:
+            self.motor_shutdown()
 
         if self.paused:
             self.pause()
@@ -102,57 +97,55 @@ class Controls(object):
         Thread(target=self.feed, args=()).start()
 
     def feed(self):
-        GPIO.output(self.leftStepper['step'], GPIO.HIGH)
+        GPIO.output(self.left_stepper['step'], GPIO.HIGH)
         time.sleep(0.0001)
-        GPIO.output(self.leftStepper['step'], GPIO.LOW)
+        GPIO.output(self.left_stepper['step'], GPIO.LOW)
         time.sleep(0.0001)
-
 
     def pause(self):
-        GPIO.output(self.leftStepper['step'], GPIO.LOW)
-        GPIO.output(self.rightStepper['step'], GPIO.LOW)
+        GPIO.output(self.left_stepper['step'], GPIO.LOW)
+        GPIO.output(self.right_stepper['step'], GPIO.LOW)
 
-    def backlightOn(self):
+    def backlight_on(self):
         self.output = GPIO.output(self.backlightPin, GPIO.HIGH)
 
     def backlightOff(self):
         self.output = GPIO.output(self.backlightPin, GPIO.LOW)
 
-    def motorShutdown(self):
-        GPIO.output(self.leftStepper['enable'], GPIO.HIGH)
-        GPIO.output(self.rightStepper['enable'], GPIO.HIGH)
-        for key, pin in self.rightStepper.items():
+    def motor_shutdown(self):
+        GPIO.output(self.left_stepper['enable'], GPIO.HIGH)
+        GPIO.output(self.right_stepper['enable'], GPIO.HIGH)
+        for key, pin in self.right_stepper.items():
             if key is 'microstep':
-                for microstepPin, value in pin.items():
+                for microstep_pin, value in pin.items():
                     GPIO.output(value, GPIO.LOW)
             else:
                 GPIO.output(pin, GPIO.LOW)
 
-        for key, pin in self.leftStepper.items():
+        for key, pin in self.left_stepper.items():
             if key is 'microstep':
-                for microstepPin, value in pin.items():
+                for microstep_pin, value in pin.items():
                     GPIO.output(value, GPIO.LOW)
             else:
                 GPIO.output(pin, GPIO.LOW)
 
     def close(self):
-        self.motorShutdown()
+        self.motor_shutdown()
         GPIO.cleanup()
+
 
 if __name__ == '__main__':
     controls = Controls()
     controls.microstep('sixteenth')
-    controls.motorSetup()
-    controls.backlightOn()
+    controls.motor_setup()
+    controls.backlight_on()
     while True:
-        for step in range(0, 1500):
+        for step in range(0, 100):
             time.sleep(0.004)
-            controls.motorForward()
-            #controls.feed_film()
+            controls.motor_forward()
 
-    GPIO.output(controls.rightStepper['enable'], GPIO.HIGH)
-    GPIO.output(controls.leftStepper['enable'], GPIO.HIGH)
-    controls.backlightOff()
-    controls.motorStopped = True
+    GPIO.output(controls.right_stepper['enable'], GPIO.HIGH)
+    GPIO.output(controls.left_stepper['enable'], GPIO.HIGH)
+    controls.backlight_off()
+    controls.motor_stopped = True
     controls.close()
-
