@@ -34,6 +34,9 @@ class FrameCapture(object):
     def init_camera(self):
         time.sleep(0.1)
 
+    def clear_buffer(self):
+        self.raw.truncate(0)
+
     def capture_low_res(self):
         if self.camera.resolution is not self.low_res:
             self.camera.resolution = self.low_res

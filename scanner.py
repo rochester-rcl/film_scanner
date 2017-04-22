@@ -30,3 +30,4 @@ if __name__ == '__main__':
             frame = capture.capture_low_res()
             if detector.detect_perfs(frame) is True:
                 capture.capture_hi_res_async()
+            capture.clear_buffer()
